@@ -1,3 +1,5 @@
+> ⚠️ This is still experimental. Do not use in production yet.
+
 # Seald SDK for iOS
 
 This package is the Seald SDK for iOS.
