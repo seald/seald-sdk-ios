@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "seald-sdk-ios",
+    name: "SealdSdk",
     products: [
         .library(
             name: "SealdSdk",
