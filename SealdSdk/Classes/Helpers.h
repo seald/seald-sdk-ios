@@ -385,10 +385,10 @@ typedef NS_ENUM (NSInteger, SealdEncryptionSessionRetrievalFlow) {
 /** The sigchain hash. */
 @property (atomic, strong, readonly) NSString* sigchainHash;
 /** The position of the associated hash in the sigchain */
-@property (atomic, readonly) long position;
+@property (atomic, readonly) NSInteger position;
 /** \cond */
 - (instancetype) initWithSigchainHash:(NSString*)sigchainHash
-                             position:(long)position;
+                             position:(NSInteger)position;
 + (instancetype) fromMobileSdk:(SealdSdkInternalsMobile_sdkGetSigchainResponse*)nativeResp;
 /** \endcond */
 @end
@@ -403,13 +403,13 @@ typedef NS_ENUM (NSInteger, SealdEncryptionSessionRetrievalFlow) {
 /** Whether or not the hash was found in the user's sigchain. */
 @property (atomic, assign, readonly) BOOL found;
 /** The position in the sigchain where the expected hash was found */
-@property (atomic, readonly) long position;
+@property (atomic, readonly) NSInteger position;
 /** The number of transaction in the sigchain */
-@property (atomic, readonly) long lastPosition;
+@property (atomic, readonly) NSInteger lastPosition;
 /** \cond */
 - (instancetype) initWithFound:(BOOL)hash
-                      position:(long)position
-                  lastPosition:(long)lastPosition;
+                      position:(NSInteger)position
+                  lastPosition:(NSInteger)lastPosition;
 + (instancetype) fromMobileSdk:(SealdSdkInternalsMobile_sdkCheckSigchainResponse*)nativeResp;
 /** \endcond */
 @end
@@ -540,6 +540,64 @@ typedef NS_ENUM (NSInteger, SealdEncryptionSessionRetrievalFlow) {
 /** \endcond */
 @end
 
+
+
+/**
+ * SealdGroupTmrTemporaryKey holds the information about a group TMR temporary key.
+ */
+@interface SealdGroupTmrTemporaryKey : NSObject
+/** Id of the TMR key. */
+@property (atomic, readonly) NSString* keyId;
+/** The id of the group. */
+@property (atomic, readonly) NSString* groupId;
+/** Does that key give the admin status. */
+@property (atomic, readonly) BOOL isAdmin;
+/** Id of the user who created this key. */
+@property (atomic, readonly) NSString* createdById;
+/** The type of authentication factor. */
+@property (atomic, readonly) NSString* authFactorType;
+/** Date of creation. */
+@property (atomic, readonly) NSTimeInterval* created;
+/** \cond */
+- (instancetype) initWithKeyId:(NSString*)keyId
+                       groupId:(NSString*)groupId
+                       isAdmin:(BOOL)isAdmin
+                   createdById:(NSString*)createdById
+                       created:(NSTimeInterval)created
+                authFactorType:(NSString*)authFactorType;
++ (instancetype) fromMobileSdk:(SealdSdkInternalsMobile_sdkGroupTMRTemporaryKey*)nativeResp;
+/** \endcond */
+@end
+
+/**
+ * SealdListedGroupTMRTemporaryKeys holds a list of GroupTmrTemporaryKey.
+ */
+@interface SealdListedGroupTMRTemporaryKeys : NSObject
+/** Number of pages found. */
+@property (atomic, readonly) NSInteger nbPage;
+/** Temporary keys found. */
+@property (atomic, readonly) NSArray<SealdGroupTmrTemporaryKey*>* keys;
+/** \cond */
+- (instancetype) initWithNbPage:(NSInteger)nbPage
+                           keys:(NSArray<SealdGroupTmrTemporaryKey*>*)keys;
++ (instancetype) fromMobileSdk:(SealdSdkInternalsMobile_sdkListedGroupTMRTemporaryKeys*)nativeResp;
+/** \endcond */
+@end
+
+/**
+ * SealdSearchGroupTMRTemporaryKeys holds the tmr filters used when searching group TMR temporary keys.
+ */
+@interface SealdSearchGroupTMRTemporaryKeys : NSObject
+/** Return only the TMR temporary keys that give access to this groupId. */
+@property (atomic, assign, readonly) NSString* groupId;
+/** Page to return. */
+@property (atomic, assign, readonly) NSInteger page;
+/** Should return all pages after `Page`. */
+@property (atomic, assign, readonly) BOOL all;
+/** \cond */
+- (SealdSdkInternalsMobile_sdkSearchGroupTMRTemporaryKeysOpts*) toMobileSdk;
+/** \endcond */
+@end
 NS_ASSUME_NONNULL_END
 
 #endif /* Helpers_h */

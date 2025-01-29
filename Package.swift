@@ -3,11 +3,11 @@
 import PackageDescription
 
 let package = Package(
-    name: "seald-sdk-ios",
+    name: "SealdSdk",
     products: [
         .library(
             name: "SealdSdk",
-            targets: ["SealdSdk"]),
+            targets: ["SealdSdk"])
     ],
     targets: [
         .target(
@@ -19,6 +19,6 @@ let package = Package(
         .binaryTarget(
             name: "SealdSdkInternals",
             path: "SealdSdk/Frameworks/SealdSdkInternals.xcframework"
-        ),
+        )
     ]
 )
