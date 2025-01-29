@@ -642,11 +642,15 @@
 
 // EncryptionSession
 - (SealdEncryptionSession*) createEncryptionSessionWithRecipients:(const NSArray<SealdRecipientWithRights*>*)recipients
+                                                         metadata:(const NSString*_Nullable)metadata
                                                          useCache:(const BOOL)useCache
                                                             error:(NSError*_Nullable*)error
 {
     NSError* localErr = nil;
-    SealdSdkInternalsMobile_sdkMobileEncryptionSession* es = [sdkInstance createEncryptionSession:[SealdRecipientWithRights toMobileSdkArray:(NSArray<SealdRecipientWithRights*>*)recipients] useCache:useCache error:&localErr];
+    SealdSdkInternalsMobile_sdkMobileEncryptionSession* es = [sdkInstance createEncryptionSession:[SealdRecipientWithRights toMobileSdkArray:(NSArray<SealdRecipientWithRights*>*)recipients]
+                                                                                         metadata:(NSString*)metadata
+                                                                                         useCache:useCache
+                                                                                            error:&localErr];
     if (localErr) {
         _SealdInternal_ConvertError(localErr, error);
         return nil;
@@ -655,12 +659,16 @@
 }
 
 - (void) createEncryptionSessionAsyncWithRecipients:(const NSArray<SealdRecipientWithRights*>*)recipients
+                                           metadata:(const NSString*_Nullable)metadata
                                            useCache:(const BOOL)useCache
                                   completionHandler:(void (^)(SealdEncryptionSession* encryptionSession, NSError* error))completionHandler
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError* localErr = nil;
-        SealdEncryptionSession* res = [self createEncryptionSessionWithRecipients:recipients useCache:useCache error:&localErr];
+        SealdEncryptionSession* res = [self createEncryptionSessionWithRecipients:recipients
+                                                                         metadata:metadata
+                                                                         useCache:useCache
+                                                                            error:&localErr];
 
         completionHandler(res, localErr);
     });
@@ -1125,7 +1133,7 @@
 }
 
 - (SealdGetSigchainResponse*) getSigchainHashWithUserId:(const NSString*)userId
-                                               position:(const long)position
+                                               position:(const NSInteger)position
                                                   error:(NSError*_Nullable*)error
 {
     NSError* localErr = nil;
@@ -1138,7 +1146,7 @@
 }
 
 - (void) getSigchainHashAsyncWithUserId:(const NSString*)userId
-                               position:(const long)position
+                               position:(const NSInteger)position
                       completionHandler:(void (^)(SealdGetSigchainResponse* encryptionSession, NSError* error))completionHandler
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -1151,7 +1159,7 @@
 
 - (SealdCheckSigchainResponse*) checkSigchainHashWithUserId:(const NSString*)userId
                                                expectedHash:(const NSString*)expectedHash
-                                                   position:(const long)position
+                                                   position:(const NSInteger)position
                                                       error:(NSError*_Nullable*)error
 {
     NSError* localErr = nil;
@@ -1168,7 +1176,7 @@
 
 - (void) checkSigchainHashAsyncWithUserId:(const NSString*)userId
                              expectedHash:(const NSString*)expectedHash
-                                 position:(const long)position
+                                 position:(const NSInteger)position
                         completionHandler:(void (^)(SealdCheckSigchainResponse* response, NSError* error))completionHandler
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -1218,6 +1226,150 @@
                                                                 error:&localErr];
 
         completionHandler(res, localErr);
+    });
+}
+
+- (SealdGroupTmrTemporaryKey*) createGroupTMRTemporaryKeyWithGroupId:(const NSString*)groupId
+                                                          authFactor:(const SealdTmrAuthFactor*)authFactor
+                                                             isAdmin:(const BOOL)isAdmin
+                                                rawOverEncryptionKey:(const NSData*)rawOverEncryptionKey
+                                                               error:(NSError*_Nullable*)error
+{
+    NSError* localErr = nil;
+    SealdSdkInternalsMobile_sdkGroupTMRTemporaryKey* res = [sdkInstance createGroupTMRTemporaryKey:(NSString*)groupId
+                                                                                        authFactor:[authFactor toMobileSdk]
+                                                                                           isAdmin:isAdmin
+                                                                              rawOverEncryptionKey:(NSData*)rawOverEncryptionKey
+                                                                                             error:&localErr];
+    if (localErr) {
+        _SealdInternal_ConvertError(localErr, error);
+        return nil;
+    }
+    return [SealdGroupTmrTemporaryKey fromMobileSdk:res];
+}
+
+- (void) createGroupTMRTemporaryKeyAsyncWithGroupId:(const NSString*)groupId
+                                         authFactor:(const SealdTmrAuthFactor*)authFactor
+                                            isAdmin:(const BOOL)isAdmin
+                               rawOverEncryptionKey:(const NSData*)rawOverEncryptionKey
+                                  completionHandler:(void (^)(SealdGroupTmrTemporaryKey* response, NSError*_Nullable error))completionHandler
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSError* localErr = nil;
+        SealdGroupTmrTemporaryKey* res = [self createGroupTMRTemporaryKeyWithGroupId:groupId
+                                                                          authFactor:authFactor
+                                                                             isAdmin:isAdmin
+                                                                rawOverEncryptionKey:rawOverEncryptionKey
+                                                                               error:&localErr];
+
+        completionHandler(res, localErr);
+    });
+}
+
+- (SealdListedGroupTMRTemporaryKeys*) listGroupTMRTemporaryKeysWithGroupId:(const NSString*)groupId
+                                                                      page:(const NSInteger)page
+                                                                       all:(const BOOL)all
+                                                                     error:(NSError*_Nullable*)error
+{
+    NSError* localErr = nil;
+    SealdSdkInternalsMobile_sdkListedGroupTMRTemporaryKeys* res = [sdkInstance listGroupTMRTemporaryKeys:(NSString*)groupId page:page all:all error:&localErr];
+    if (localErr) {
+        _SealdInternal_ConvertError(localErr, error);
+        return nil;
+    }
+    return [SealdListedGroupTMRTemporaryKeys fromMobileSdk:res];
+}
+
+- (void) listGroupTMRTemporaryKeysAsyncWithGroupId:(const NSString*)groupId
+                                              page:(const NSInteger)page
+                                               all:(const BOOL)all
+                                 completionHandler:(void (^)(SealdListedGroupTMRTemporaryKeys* response, NSError*_Nullable error))completionHandler
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSError* localErr = nil;
+        SealdListedGroupTMRTemporaryKeys* res = [self listGroupTMRTemporaryKeysWithGroupId:groupId
+                                                                                      page:page
+                                                                                       all:all
+                                                                                     error:&localErr];
+
+        completionHandler(res, localErr);
+    });
+}
+
+- (SealdListedGroupTMRTemporaryKeys*) searchGroupTMRTemporaryKeysWithTmrJWT:(const NSString*)tmrJWT
+                                                                    options:(SealdSearchGroupTMRTemporaryKeys*_Nullable)options
+                                                                      error:(NSError*_Nullable*)error
+{
+    NSError* localErr = nil;
+    SealdSdkInternalsMobile_sdkListedGroupTMRTemporaryKeys* res = [sdkInstance searchGroupTMRTemporaryKeys:(NSString*)tmrJWT opts:[options toMobileSdk] error:&localErr];
+    if (localErr) {
+        _SealdInternal_ConvertError(localErr, error);
+        return nil;
+    }
+    return [SealdListedGroupTMRTemporaryKeys fromMobileSdk:res];
+}
+
+- (void) searchGroupTMRTemporaryKeysAsyncWithTmrJWT:(const NSString*)tmrJWT
+                                            options:(SealdSearchGroupTMRTemporaryKeys*_Nullable)options
+                                  completionHandler:(void (^)(SealdListedGroupTMRTemporaryKeys* response, NSError*_Nullable error))completionHandler
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSError* localErr = nil;
+        SealdListedGroupTMRTemporaryKeys* res = [self searchGroupTMRTemporaryKeysWithTmrJWT:tmrJWT
+                                                                                    options:options
+                                                                                      error:&localErr];
+
+        completionHandler(res, localErr);
+    });
+}
+
+- (void) convertGroupTMRTemporaryKeyWithGroupId:(const NSString*)groupId
+                                 temporaryKeyId:(const NSString*)temporaryKeyId
+                                         tmrJWT:(const NSString*)tmrJWT
+                           rawOverEncryptionKey:(const NSData*)rawOverEncryptionKey
+                                deleteOnConvert:(const BOOL)deleteOnConvert
+                                          error:(NSError*_Nullable*)error
+{
+    NSError* localErr = nil;
+    [sdkInstance convertGroupTMRTemporaryKey:(NSString*)groupId temporaryKeyId:(NSString*)temporaryKeyId tmrJWT:(NSString*)tmrJWT rawOverEncryptionKey:(NSData*)rawOverEncryptionKey deleteOnConvert:deleteOnConvert error:&localErr];
+    if (localErr) {
+        _SealdInternal_ConvertError(localErr, error);
+    }
+}
+
+- (void) convertGroupTMRTemporaryKeyAsyncWithGroupId:(const NSString*)groupId
+                                      temporaryKeyId:(const NSString*)temporaryKeyId
+                                              tmrJWT:(const NSString*)tmrJWT
+                                rawOverEncryptionKey:(const NSData*)rawOverEncryptionKey
+                                     deleteOnConvert:(const BOOL)deleteOnConvert
+                                   completionHandler:(void (^)(NSError*_Nullable error))completionHandler
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSError* localErr = nil;
+        [self convertGroupTMRTemporaryKeyWithGroupId:groupId temporaryKeyId:temporaryKeyId tmrJWT:tmrJWT rawOverEncryptionKey:rawOverEncryptionKey deleteOnConvert:deleteOnConvert error:&localErr];
+        completionHandler(localErr);
+    });
+}
+
+- (void) deleteGroupTMRTemporaryKeyWithGroupId:(const NSString*)groupId
+                                temporaryKeyId:(const NSString*)temporaryKeyId
+                                         error:(NSError*_Nullable*)error
+{
+    NSError* localErr = nil;
+    [sdkInstance deleteGroupTMRTemporaryKey:(NSString*)groupId temporaryKeyId:(NSString*)temporaryKeyId error:&localErr];
+    if (localErr) {
+        _SealdInternal_ConvertError(localErr, error);
+    }
+}
+
+- (void) deleteGroupTMRTemporaryKeyAsyncWithGroupId:(const NSString*)groupId
+                                     temporaryKeyId:(const NSString*)temporaryKeyId
+                                  completionHandler:(void (^)(NSError*_Nullable error))completionHandler
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSError* localErr = nil;
+        [self deleteGroupTMRTemporaryKeyWithGroupId:groupId temporaryKeyId:temporaryKeyId error:&localErr];
+        completionHandler(localErr);
     });
 }
 
