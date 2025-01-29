@@ -1,10 +1,8 @@
-> ⚠️ This is still experimental. Do not use in production yet.
-
 # Seald SDK for iOS
 
 This package is the Seald SDK for iOS.
 
-The current version is `##VERSION##`.
+The current version is `0.9.0-beta.2b`.
 
 You can install it either with [Cocoapods](https://cocoapods.org/), or with the [Swift Package Manager](https://www.swift.org/documentation/package-manager/).
 
@@ -14,7 +12,7 @@ Here is how you can add it to your `Podfile`:
 
 ```ruby{2}
 target 'YourApp' do
-  pod 'SealdSdk', '##VERSION##'
+  pod 'SealdSdk', '0.9.0-beta.2b'
 end
 ```
 
@@ -27,10 +25,11 @@ You can add the repository <https://github.com/seald/seald-sdk-ios> to your `Pac
 > ⚠️ This repository <https://github.com/seald/seald-sdk-ios> is only for distribution of the release version of the SDK.
 > To access the source code, see <https://github.com/seald/go-seald-sdk>.
 
-## Import
+## Import 
 
 You can then import it in your code with:
 
+::: code-group
 ```objc [ObjC]
 #import <SealdSdk/SealdSdk.h>
 ```
@@ -39,6 +38,7 @@ You can then import it in your code with:
 import SealdSdk
 ```
 
+:::
 
 You can also see the [example app for Objective-C](https://github.com/seald/seald-sdk-demo-app-ios/),
 or the [example app for Swift](https://github.com/seald/seald-sdk-demo-app-ios-swift/).
@@ -54,6 +54,7 @@ It represents an instance of the Seald SDK.
 
 You can instantiate it this way:
 
+::: code-group
 ```objc [ObjC]
 SealdSdk* seald = [[SealdSdk alloc] initWithApiUrl:@"https://api.seald.io/"
                                              appId:@"YourAppId"
@@ -81,6 +82,7 @@ let seald = try! SealdSdk.init(
 )
 ```
 
+:::
 
 This class then allows you to [create an account](./SealdSdk.md#createaccountwithsignupjwt-devicename-displayname-privatekeys-expireafter-error),
 create or retrieve a [SealdEncryptionSession](./SealdEncryptionSession.md),
@@ -98,4 +100,4 @@ or [`-[SealdSdk retrieveEncryptionSessionFromMessage:useCache:error:]`](./SealdS
 
 © 2024 Seald SAS
 
-You can find the license information of Open Source libraries used in Seald SDK for mobile at <https://download.seald.io/download/mobile_dependencies_licenses_##VERSION##.txt>.
+You can find the license information of Open Source libraries used in Seald SDK for mobile at <https://download.seald.io/download/mobile_dependencies_licenses_0.9.0-beta.2b.txt>.
