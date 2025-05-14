@@ -14,6 +14,9 @@
 @class SealdSdkInternalsMobile_sdkAccountInfo;
 @class SealdSdkInternalsMobile_sdkActionStatus;
 @class SealdSdkInternalsMobile_sdkActionStatusArray;
+@class SealdSdkInternalsMobile_sdkAnonymousInitializeOptions;
+@class SealdSdkInternalsMobile_sdkAnonymousTmrRecipient;
+@class SealdSdkInternalsMobile_sdkAnonymousTmrRecipientArray;
 @class SealdSdkInternalsMobile_sdkAuthFactor;
 @class SealdSdkInternalsMobile_sdkCheckSigchainResponse;
 @class SealdSdkInternalsMobile_sdkClearFile;
@@ -35,6 +38,8 @@
 @class SealdSdkInternalsMobile_sdkListedGroupTMRTemporaryKeys;
 @class SealdSdkInternalsMobile_sdkMassReencryptOptions;
 @class SealdSdkInternalsMobile_sdkMassReencryptResponse;
+@class SealdSdkInternalsMobile_sdkMobileAnonymousEncryptionSession;
+@class SealdSdkInternalsMobile_sdkMobileAnonymousSDK;
 @class SealdSdkInternalsMobile_sdkMobileEncryptionSession;
 @class SealdSdkInternalsMobile_sdkMobileEncryptionSessionArray;
 @class SealdSdkInternalsMobile_sdkMobileSDK;
@@ -90,6 +95,41 @@
 - (nonnull instancetype)init;
 - (SealdSdkInternalsMobile_sdkActionStatusArray* _Nullable)add:(SealdSdkInternalsMobile_sdkActionStatus* _Nullable)s;
 - (SealdSdkInternalsMobile_sdkActionStatus* _Nullable)get:(long)i;
+- (long)size;
+@end
+
+@interface SealdSdkInternalsMobile_sdkAnonymousInitializeOptions : NSObject <goSeqRefInterface> {
+}
+@property(strong, readonly) _Nonnull id _ref;
+
+- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
+- (nonnull instancetype)init;
+@property (nonatomic) NSString* _Nonnull apiURL;
+@property (nonatomic) NSString* _Nonnull appId;
+@property (nonatomic) int8_t logLevel;
+@property (nonatomic) BOOL logNoColor;
+@property (nonatomic) NSString* _Nonnull instanceName;
+@property (nonatomic) NSString* _Nonnull platform;
+@end
+
+@interface SealdSdkInternalsMobile_sdkAnonymousTmrRecipient : NSObject <goSeqRefInterface> {
+}
+@property(strong, readonly) _Nonnull id _ref;
+
+- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
+- (nonnull instancetype)init;
+@property (nonatomic) SealdSdkInternalsMobile_sdkAuthFactor* _Nullable authFactor;
+@property (nonatomic) NSData* _Nullable rawOverEncryptionKey;
+@end
+
+@interface SealdSdkInternalsMobile_sdkAnonymousTmrRecipientArray : NSObject <goSeqRefInterface> {
+}
+@property(strong, readonly) _Nonnull id _ref;
+
+- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
+- (nonnull instancetype)init;
+- (SealdSdkInternalsMobile_sdkAnonymousTmrRecipientArray* _Nullable)add:(SealdSdkInternalsMobile_sdkAnonymousTmrRecipient* _Nullable)s;
+- (SealdSdkInternalsMobile_sdkAnonymousTmrRecipient* _Nullable)get:(long)i;
 - (long)size;
 @end
 
@@ -330,6 +370,32 @@
 @property (nonatomic) long failed;
 @end
 
+@interface SealdSdkInternalsMobile_sdkMobileAnonymousEncryptionSession : NSObject <goSeqRefInterface> {
+}
+@property(strong, readonly) _Nonnull id _ref;
+
+- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
+- (nonnull instancetype)init;
+@property (nonatomic) NSString* _Nonnull sessionId;
+- (SealdSdkInternalsMobile_sdkClearFile* _Nullable)decryptFile:(NSData* _Nullable)encryptedFile error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)decryptFileFromURI:(NSString* _Nullable)encryptedFileURI error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)decryptMessage:(NSString* _Nullable)clearMessage error:(NSError* _Nullable* _Nullable)error;
+- (NSData* _Nullable)encryptFile:(NSData* _Nullable)clearFile filename:(NSString* _Nullable)filename error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)encryptFileFromURI:(NSString* _Nullable)clearFileURI error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)encryptMessage:(NSString* _Nullable)clearMessage error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)serialize:(NSError* _Nullable* _Nullable)error;
+@end
+
+@interface SealdSdkInternalsMobile_sdkMobileAnonymousSDK : NSObject <goSeqRefInterface> {
+}
+@property(strong, readonly) _Nonnull id _ref;
+
+- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
+- (nonnull instancetype)init;
+- (SealdSdkInternalsMobile_sdkMobileAnonymousEncryptionSession* _Nullable)createAnonymousEncryptionSession:(NSString* _Nullable)encryptionToken getKeysToken:(NSString* _Nullable)getKeysToken recipients:(SealdSdkInternalsMobile_sdkStringArray* _Nullable)recipients tmrRecipients:(SealdSdkInternalsMobile_sdkAnonymousTmrRecipientArray* _Nullable)tmrRecipients error:(NSError* _Nullable* _Nullable)error;
+- (SealdSdkInternalsMobile_sdkMobileAnonymousEncryptionSession* _Nullable)deserializeAnonymousEncryptionSession:(NSString* _Nullable)serializedSession error:(NSError* _Nullable* _Nullable)error;
+@end
+
 @interface SealdSdkInternalsMobile_sdkMobileEncryptionSession : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) _Nonnull id _ref;
@@ -351,6 +417,7 @@
 - (SealdSdkInternalsMobile_sdkRevokeResult* _Nullable)revokeAll:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkRevokeResult* _Nullable)revokeOthers:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkRevokeResult* _Nullable)revokeRecipients:(SealdSdkInternalsMobile_sdkStringArray* _Nullable)recipientsIds proxySessionsIds:(SealdSdkInternalsMobile_sdkStringArray* _Nullable)proxySessionsIds error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)serialize:(NSError* _Nullable* _Nullable)error;
 @end
 
 @interface SealdSdkInternalsMobile_sdkMobileEncryptionSessionArray : NSObject <goSeqRefInterface> {
@@ -382,6 +449,7 @@
 - (SealdSdkInternalsMobile_sdkGroupTMRTemporaryKey* _Nullable)createGroupTMRTemporaryKey:(NSString* _Nullable)groupId authFactor:(SealdSdkInternalsMobile_sdkAuthFactor* _Nullable)authFactor isAdmin:(BOOL)isAdmin rawOverEncryptionKey:(NSData* _Nullable)rawOverEncryptionKey error:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkCreateSubIdentityResponse* _Nullable)createSubIdentity:(SealdSdkInternalsMobile_sdkCreateSubIdentityOptions* _Nullable)options error:(NSError* _Nullable* _Nullable)error;
 - (BOOL)deleteGroupTMRTemporaryKey:(NSString* _Nullable)groupId temporaryKeyId:(NSString* _Nullable)temporaryKeyId error:(NSError* _Nullable* _Nullable)error;
+- (SealdSdkInternalsMobile_sdkMobileEncryptionSession* _Nullable)deserializeEncryptionSession:(NSString* _Nullable)serializedSession error:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkDevicesMissingKeysArray* _Nullable)devicesMissingKeys:(BOOL)forceLocalAccountUpdate error:(NSError* _Nullable* _Nullable)error;
 - (NSData* _Nullable)exportIdentity:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkConnectorsArray* _Nullable)getConnectorsFromSealdId:(NSString* _Nullable)sealdId error:(NSError* _Nullable* _Nullable)error;
@@ -651,6 +719,8 @@ FOUNDATION_EXPORT NSString* _Nonnull const SealdSdkInternalsMobile_sdkVersion;
 // skipped variable ErrorFileDbRequiresEncKeyMobile with unsupported type: github.com/seald/go-seald-sdk/utils.SealdError
 
 @end
+
+FOUNDATION_EXPORT SealdSdkInternalsMobile_sdkMobileAnonymousSDK* _Nullable SealdSdkInternalsMobile_sdkCreateAnonymousSDK(SealdSdkInternalsMobile_sdkAnonymousInitializeOptions* _Nullable options);
 
 FOUNDATION_EXPORT SealdSdkInternalsMobile_sdkMobileSDK* _Nullable SealdSdkInternalsMobile_sdkInitialize(SealdSdkInternalsMobile_sdkSdkInitializeOptions* _Nullable options, NSError* _Nullable* _Nullable error);
 
