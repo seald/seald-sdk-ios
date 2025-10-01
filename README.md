@@ -2,7 +2,7 @@
 
 This package is the Seald SDK for iOS.
 
-The current version is `0.10.0`.
+The current version is `0.11.0-beta.2`.
 
 You can install it either with [Cocoapods](https://cocoapods.org/), or with the [Swift Package Manager](https://www.swift.org/documentation/package-manager/).
 
@@ -12,7 +12,7 @@ Here is how you can add it to your `Podfile`:
 
 ```ruby{2}
 target 'YourApp' do
-  pod 'SealdSdk', '0.10.0'
+  pod 'SealdSdk', '0.11.0-beta.2'
 end
 ```
 
@@ -100,4 +100,4 @@ or [`-[SealdSdk retrieveEncryptionSessionFromMessage:useCache:error:]`](./SealdS
 
 © 2025 Seald SAS
 
-You can find the license information of Open Source libraries used in Seald SDK for mobile at <https://download.seald.io/download/mobile_dependencies_licenses_0.10.0.txt>.
+You can find the license information of Open Source libraries used in Seald SDK for mobile at <https://download.seald.io/download/mobile_dependencies_licenses_0.11.0-beta.2.txt>.
