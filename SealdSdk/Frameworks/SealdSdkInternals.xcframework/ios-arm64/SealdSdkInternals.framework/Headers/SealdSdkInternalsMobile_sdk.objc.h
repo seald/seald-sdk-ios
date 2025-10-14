@@ -113,6 +113,7 @@
 - (nonnull instancetype)init;
 @property (nonatomic) NSString* _Nonnull apiURL;
 @property (nonatomic) NSString* _Nonnull appId;
+@property (nonatomic) long maxParallelRequests;
 @property (nonatomic) int8_t logLevel;
 @property (nonatomic) BOOL logNoColor;
 @property (nonatomic) NSString* _Nonnull instanceName;
@@ -680,6 +681,7 @@
 @property (nonatomic) NSString* _Nonnull databasePath;
 @property (nonatomic) NSData* _Nullable databaseEncryptionKey;
 @property (nonatomic) int64_t encryptionSessionCacheTTL;
+@property (nonatomic) long maxParallelRequests;
 @property (nonatomic) int8_t logLevel;
 @property (nonatomic) BOOL logNoColor;
 @property (nonatomic) NSString* _Nonnull instanceName;
@@ -719,6 +721,7 @@
 - (nonnull instancetype)init;
 @property (nonatomic) NSString* _Nonnull ssksURL;
 @property (nonatomic) NSString* _Nonnull appId;
+@property (nonatomic) long maxParallelRequests;
 @property (nonatomic) int8_t logLevel;
 @property (nonatomic) BOOL logNoColor;
 @property (nonatomic) NSString* _Nonnull instanceName;
@@ -733,6 +736,7 @@
 - (nonnull instancetype)init;
 @property (nonatomic) NSString* _Nonnull ssksURL;
 @property (nonatomic) NSString* _Nonnull appId;
+@property (nonatomic) long maxParallelRequests;
 @property (nonatomic) int8_t logLevel;
 @property (nonatomic) BOOL logNoColor;
 @property (nonatomic) NSString* _Nonnull instanceName;
