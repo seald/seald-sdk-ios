@@ -413,6 +413,8 @@
 - (nonnull instancetype)init;
 - (SealdSdkInternalsMobile_sdkMobileAnonymousEncryptionSession* _Nullable)createAnonymousEncryptionSession:(NSString* _Nullable)encryptionToken getKeysToken:(NSString* _Nullable)getKeysToken recipients:(SealdSdkInternalsMobile_sdkStringArray* _Nullable)recipients tmrRecipients:(SealdSdkInternalsMobile_sdkAnonymousTmrRecipientArray* _Nullable)tmrRecipients error:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkMobileAnonymousEncryptionSession* _Nullable)deserializeAnonymousEncryptionSession:(NSString* _Nullable)serializedSession error:(NSError* _Nullable* _Nullable)error;
+- (SealdSdkInternalsMobile_sdkMobileAnonymousEncryptionSession* _Nullable)retrieveAnonymousEncryptionSessionWithSymEncKeyPassword:(NSString* _Nullable)retrieveJWT sessionId:(NSString* _Nullable)sessionId symEncKeyId:(NSString* _Nullable)symEncKeyId symEncKeyPassword:(NSString* _Nullable)symEncKeyPassword error:(NSError* _Nullable* _Nullable)error;
+- (SealdSdkInternalsMobile_sdkMobileAnonymousEncryptionSession* _Nullable)retrieveAnonymousEncryptionSessionWithSymEncKeyRawKeys:(NSString* _Nullable)retrieveJWT sessionId:(NSString* _Nullable)sessionId symEncKeyId:(NSString* _Nullable)symEncKeyId rawSecret:(NSString* _Nullable)rawSecret rawSymKey:(NSData* _Nullable)rawSymKey error:(NSError* _Nullable* _Nullable)error;
 @end
 
 @interface SealdSdkInternalsMobile_sdkMobileEncryptionSession : NSObject <goSeqRefInterface> {
@@ -426,6 +428,8 @@
 - (SealdSdkInternalsMobile_sdkActionStatusArray* _Nullable)addMultipleTmrAccesses:(SealdSdkInternalsMobile_sdkTmrRecipientWithRightsArray* _Nullable)recipients error:(NSError* _Nullable* _Nullable)error;
 - (BOOL)addProxySession:(NSString* _Nullable)proxySessionId rights:(SealdSdkInternalsMobile_sdkRecipientRights* _Nullable)rights error:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkActionStatusArray* _Nullable)addRecipients:(SealdSdkInternalsMobile_sdkRecipientsWithRightsArray* _Nullable)recipients error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)addSymEncKeyFromPassword:(NSString* _Nullable)password rights:(SealdSdkInternalsMobile_sdkRecipientRights* _Nullable)rights error:(NSError* _Nullable* _Nullable)error;
+- (NSString* _Nonnull)addSymEncKeyFromRawKeys:(NSString* _Nullable)rawSecret rawSymKey:(NSData* _Nullable)rawSymKey rights:(SealdSdkInternalsMobile_sdkRecipientRights* _Nullable)rights error:(NSError* _Nullable* _Nullable)error;
 - (NSString* _Nonnull)addTmrAccess:(SealdSdkInternalsMobile_sdkTmrRecipientWithRights* _Nullable)tmrRecipient error:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkClearFile* _Nullable)decryptFile:(NSData* _Nullable)encryptedFile error:(NSError* _Nullable* _Nullable)error;
 - (NSString* _Nonnull)decryptFileFromURI:(NSString* _Nullable)encryptedFileURI error:(NSError* _Nullable* _Nullable)error;
@@ -493,8 +497,12 @@
 - (SealdSdkInternalsMobile_sdkMobileEncryptionSession* _Nullable)retrieveEncryptionSessionFromBytes:(NSData* _Nullable)fileBytes useCache:(BOOL)useCache lookupProxyKey:(BOOL)lookupProxyKey lookupGroupKey:(BOOL)lookupGroupKey error:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkMobileEncryptionSession* _Nullable)retrieveEncryptionSessionFromFile:(NSString* _Nullable)fileUri useCache:(BOOL)useCache lookupProxyKey:(BOOL)lookupProxyKey lookupGroupKey:(BOOL)lookupGroupKey error:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkMobileEncryptionSession* _Nullable)retrieveEncryptionSessionFromMessage:(NSString* _Nullable)message useCache:(BOOL)useCache lookupProxyKey:(BOOL)lookupProxyKey lookupGroupKey:(BOOL)lookupGroupKey error:(NSError* _Nullable* _Nullable)error;
+- (SealdSdkInternalsMobile_sdkMobileEncryptionSession* _Nullable)retrieveEncryptionSessionWithSymEncKeyPassword:(NSString* _Nullable)sessionId symEncKeyId:(NSString* _Nullable)symEncKeyId symEncKeyPassword:(NSString* _Nullable)symEncKeyPassword useCache:(BOOL)useCache error:(NSError* _Nullable* _Nullable)error;
+- (SealdSdkInternalsMobile_sdkMobileEncryptionSession* _Nullable)retrieveEncryptionSessionWithSymEncKeyRawKeys:(NSString* _Nullable)sessionId symEncKeyId:(NSString* _Nullable)symEncKeyId rawSecret:(NSString* _Nullable)rawSecret rawSymKey:(NSData* _Nullable)rawSymKey useCache:(BOOL)useCache error:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkMobileEncryptionSessionArray* _Nullable)retrieveMultipleEncryptionSessions:(SealdSdkInternalsMobile_sdkStringArray* _Nullable)sessionIds useCache:(BOOL)useCache lookupProxyKey:(BOOL)lookupProxyKey lookupGroupKey:(BOOL)lookupGroupKey error:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkListedGroupTMRTemporaryKeys* _Nullable)searchGroupTMRTemporaryKeys:(NSString* _Nullable)groupId opts:(SealdSdkInternalsMobile_sdkSearchGroupTMRTemporaryKeysOpts* _Nullable)opts error:(NSError* _Nullable* _Nullable)error;
+- (SealdSdkInternalsMobile_sdkMobileEncryptionSession* _Nullable)selfAddToEncryptionSessionWithSymEncKeyPassword:(NSString* _Nullable)sessionId symEncKeyId:(NSString* _Nullable)symEncKeyId symEncKeyPassword:(NSString* _Nullable)symEncKeyPassword rights:(SealdSdkInternalsMobile_sdkRecipientRights* _Nullable)rights useCache:(BOOL)useCache error:(NSError* _Nullable* _Nullable)error;
+- (SealdSdkInternalsMobile_sdkMobileEncryptionSession* _Nullable)selfAddToEncryptionSessionWithSymEncKeyRawKeys:(NSString* _Nullable)sessionId symEncKeyId:(NSString* _Nullable)symEncKeyId rawSecret:(NSString* _Nullable)rawSecret rawSymKey:(NSData* _Nullable)rawSymKey rights:(SealdSdkInternalsMobile_sdkRecipientRights* _Nullable)rights useCache:(BOOL)useCache error:(NSError* _Nullable* _Nullable)error;
 - (BOOL)setGroupAdmins:(NSString* _Nullable)groupId addToAdmins:(SealdSdkInternalsMobile_sdkStringArray* _Nullable)addToAdmins removeFromAdmins:(SealdSdkInternalsMobile_sdkStringArray* _Nullable)removeFromAdmins error:(NSError* _Nullable* _Nullable)error;
 - (BOOL)shouldRenewGroup:(NSString* _Nullable)groupId ret0_:(BOOL* _Nullable)ret0_ error:(NSError* _Nullable* _Nullable)error;
 - (BOOL)updateCurrentDevice:(NSError* _Nullable* _Nullable)error;
